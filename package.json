@@ -1,0 +1,116 @@
+{
+  "name": "@t8ngs/expect",
+  "description": "Assertion package built on top of Jest expect",
+  "version": "1.0.0",
+  "engines": {
+    "node": ">=18.16.0"
+  },
+  "type": "module",
+  "files": [
+    "build",
+    "!build/bin",
+    "!build/tests"
+  ],
+  "exports": {
+    ".": "./build/index.js"
+  },
+  "scripts": {
+    "pretest": "npm run lint",
+    "test": "c8 npm run quick:test",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "typecheck": "tsc --noEmit",
+    "clean": "del-cli build",
+    "precompile": "npm run lint && npm run clean",
+    "compile": "tsup-node && tsc --emitDeclarationOnly --declaration",
+    "build": "npm run compile",
+    "version": "npm run build",
+    "prepublishOnly": "npm run build",
+    "release": "release-it",
+    "quick:test": "echo \"No tests yet\"",
+    "prepare": "husky",
+    "commitlint": "commitlint --edit",
+    "commit": "cz"
+  },
+  "devDependencies": {
+    "@arapucajs/eslint-config": "^1.1.2",
+    "@arapucajs/prettier": "^1.1.1",
+    "@arapucajs/tsconfig": "^1.0.0",
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
+    "@swc/core": "^1.13.5",
+    "@t8ngs/runner": "^1.0.1",
+    "@t8ngs/show-screen-errors": "^1.0.2",
+    "@types/luxon": "^3.7.1",
+    "@types/node": "^24.7.2",
+    "c8": "^10.1.3",
+    "commitizen": "^4.3.1",
+    "cross-env": "^10.1.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "del-cli": "^7.0.0",
+    "eslint": "^9.37.0",
+    "glob": "^11.0.3",
+    "husky": "^9.1.7",
+    "luxon": "^3.7.2",
+    "prettier": "^3.6.2",
+    "ts-node-maintained": "^10.9.6",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "expect": "^30.0.5"
+  },
+  "peerDependencies": {
+    "@t8ngs/runner": "^1.0.0 || ^4.0.0"
+  },
+  "homepage": "https://github.com/t8ngs/expect#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/t8ngs/expect.git"
+  },
+  "bugs": {
+    "url": "https://github.com/t8ngs/expect/issues"
+  },
+  "keywords": [
+    "expect",
+    "jest",
+    "japa"
+  ],
+  "author": "Jefte Costa <jefteamorim@tgmail.com>",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "tsup": {
+    "entry": [
+      "index.ts"
+    ],
+    "outDir": "./build",
+    "clean": true,
+    "format": "esm",
+    "dts": false,
+    "sourcemap": false,
+    "target": "esnext"
+  },
+  "c8": {
+    "reporter": [
+      "text",
+      "html"
+    ],
+    "exclude": [
+      "tests/**"
+    ]
+  },
+  "prettier": "@arapucajs/prettier",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "husky": {
+  "hooks": {
+    "prepare-commit-msg": "exec < /dev/tty && npx cz --hook || true"
+  }
+}
+}
